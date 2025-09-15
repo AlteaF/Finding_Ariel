@@ -1,4 +1,4 @@
-# Finding_Søren
+# Finding_Ariel
 This repository contains the necessary files and some results of the project "Finding Søren: Comparing Embedding Extractors for Zero-Shot Clustering in Danish Fish Classification"
 
 "commands.txt" contains the organised list of commands used to achieve the results presented in the paper. The paths should be consistent, but minor modifications might be necessary. 

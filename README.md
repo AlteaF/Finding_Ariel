@@ -16,3 +16,4 @@ The respository is organised as follows:
   
  requirements.txt contain the requirements used for this project, 
   
+ChatGPT was used to generate code when necessary, to speed up the project's time. 

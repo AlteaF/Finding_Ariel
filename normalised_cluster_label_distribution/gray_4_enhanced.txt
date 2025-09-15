@@ -1,0 +1,25 @@
+📊 Cluster-Class Distribution (count and % of total images per class):
+
+Cluster 0: --> 2
+  Class 1: 4652 images (25.09%)
+  Class 2: 4683 images (89.83%)
+  Class 10: 3473 images (70.39%)
+  Class 11: 4532 images (38.84%)
+
+Cluster 1: --> 11
+  Class 1: 717 images (3.87%)
+  Class 2: 394 images (7.56%)
+  Class 10: 1044 images (21.16%)
+  Class 11: 5907 images (50.62%)
+
+Cluster 2: --> 1
+  Class 1: 7638 images (41.19%)
+  Class 2: 51 images (0.98%)
+  Class 10: 8 images (0.16%)
+  Class 11: 64 images (0.55%)
+
+Cluster 3: --> 1 --> 10 
+  Class 1: 5536 images (29.85%)
+  Class 2: 85 images (1.63%)
+  Class 10: 409 images (8.29%)
+  Class 11: 1166 images (9.99%)

@@ -1,0 +1,377 @@
+1. Crop Bounding boxes
+python3 crop_bbs.py --images_dir /Users/alteafogh/Documents/ITU/summer/data/train/images --labels_dir /Users/alteafogh/Documents/ITU/summer/data/train/labels --output_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops 
+
+for test data
+python3 crop_bbs.py --images_dir /Users/alteafogh/Documents/ITU/summer/data/valid/images --labels_dir /Users/alteafogh/Documents/ITU/summer/data/valid/labels --output_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_valid/class_9/crops --class_ids 9
+
+
+
+
+2. Extract embeddings:
+a) ResNet50 
+python3 extract_embeddings.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops  --output_file ../embeddings_files/resnet_embeddings_train_correct.npz
+b) megadescriptor 
+python3 extract_embeddings_megadescriptor.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops  --output_file ../embeddings_files/megadescriptor_embeddings_train.npz
+c) DINOv2
+python3 extract_embeddings_dinov2.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops  --output_file ../embeddings_files/dino_embeddings_train.npz
+    three_classes
+    python3 extract_embeddings_dinov2.py --image_dir /Users/alteafogh/Documents/ITU/summer/Summer-fish/for-altea/three_classes/0_testing_three_classes  --output_file ../embeddings_files/dino_embeddings_train_three_classes.npz
+d) FishNet resnet50 
+python3 extract_fish_embeddings.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops  --output_file ../embeddings_files/resnet_fish_embeddings_train.npz
+reshaping fish embeddings file:
+python3 reshaping_fish_embeddings.py --input_file ../embeddings_files/resnet_fish_embeddings_train.npz --output_file ../embeddings_files/resnet_fish_embeddings_train_reshaped.npz
+
+ e) ResNet50 supervised 
+python3 extract_embeddings_supervised.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops --output_file ../embeddings_files/resnet_embeddings_train_supervised.npz --model_path saved_models/resnet50_finetuned.pth
+
+
+3. Clustering embeddings
+HDBSCAN
+PCA+HDBSCAN
+K-MEANS 
+AGGLOMERATIVE CLUSTERING 
+
+a) HDBSCAN 
+    i) on resnet50
+    python3 hdbscan_clustering.py --embedding_file ../embeddings_files/resnet_embeddings_train_correct.npz --output_file ../cluster_files/hdbscan_clusters_resnet_correct.npz
+    ii) on megadescriptor
+    python3 hdbscan_clustering.py --embedding_file ../embeddings_files/megadescriptor_embeddings_train.npz --output_file ../cluster_files/hdbscan_clusters_megadescriptor.npz
+    iii) on DINOv2
+    python3 hdbscan_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train.npz --output_file ../cluster_files/hdbscan_clusters_dino.npz
+        iii-2) Dinov2 on three classes 
+        python3 hdbscan_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_three_classes.npz --output_file ../cluster_files/hdbscan_clusters_dino_three_classes.npz
+    iv) on resnet fish
+    python3 hdbscan_clustering.py --embedding_file ../embeddings_files/resnet_fish_embeddings_train_reshaped.npz --output_file ../cluster_files/hdbscan_clusters_resnet_fish.npz 
+    v) on resnet supervised 
+    python3 hdbscan_clustering.py --embedding_file ../embeddings_files/resnet_embeddings_train_supervised.npz --output_file ../cluster_files/hdbscan_clusters_resnet_supervised.npz 
+
+    
+b) PCA+HDBSCAN    
+
+    i) on resnet50 
+    python3 pca_hdbscan_clustering.py --embedding_file ../embeddings_files/resnet_embeddings_train_correct.npz --output_file ../cluster_files/pca_hdbscan_resnet_correct.npz
+    ii) on megadescriptor
+    python3 pca_hdbscan_clustering.py --embedding_file ../embeddings_files/megadescriptor_embeddings_train.npz --output_file ../cluster_files/pca_hdbscan_megadescriptor.npz
+    iii) on DINOv2
+    python3 pca_hdbscan_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train.npz --output_file ../cluster_files/pca_hdbscan_dino.npz
+        iii.2) Dinov2 on three classes 
+    python3 pca_hdbscan_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_three_classes.npz --output_file ../cluster_files/pca_hdbscan_dino_three_classes.npz
+    iv) on resnet fish 
+    python3 pca_hdbscan_clustering.py --embedding_file ../embeddings_files/resnet_fish_embeddings_train_reshaped.npz --output_file ../cluster_files/pca_hdbscan_resnet_fish.npz
+    v) resnet supervised 
+    python3 pca_hdbscan_clustering.py --embedding_file ../embeddings_files/resnet_embeddings_train_supervised.npz --output_file ../cluster_files/pca_hdbscan_clusters_resnet_supervised.npz 
+
+
+c) K-MEANS 
+    i) on resnet50
+    python3 k_means.py --embedding_file ../embeddings_files/resnet_embeddings_train_correct.npz --n_clusters 10 --output_file ../cluster_files/k_means_clusters_resnet_correct.npz
+    ii) on megadescriptor
+    python3 k_means.py --embedding_file ../embeddings_files/megadescriptor_embeddings_train.npz --n_clusters 10 --output_file ../cluster_files/k_means_clusters_megadescriptor.npz
+    iii) on DINOv2
+    python3 k_means.py --embedding_file ../embeddings_files/dino_embeddings_train.npz --n_clusters 10 --output_file ../cluster_files/k_means_clusters_dino.npz
+    iii-2) On dinov2, with three classes
+    python3 k_means.py --embedding_file ../embeddings_files/dino_embeddings_train_three_classes.npz --n_clusters 3 --output_file ../cluster_files/3_classes_k_means_clusters_dino.npz
+    iv) on resnet pretrained on FishNet
+    python3 k_means.py --embedding_file ../embeddings_files/resnet_fish_embeddings_train_reshaped.npz --n_clusters 10 --output_file ../cluster_files/k_means_clusters_fish_resnet.npz
+     v) resnet supervised 
+    python3 k_means.py --embedding_file ../embeddings_files/resnet_embeddings_train_supervised.npz --n_clusters 10 --output_file ../cluster_files/k_means_clusters_resnet_supervised.npz
+
+d) AGGLOMERATIVE CLUSTERING
+    i) on resnet50
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/resnet_embeddings_train_correct.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_resnet_correct.npz
+    ii) on megadescriptor
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/megadescriptor_embeddings_train.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_megadescriptor.npz
+    iii) on DINOv2
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_dino.npz
+    iv) on resnet fish 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/resnet_fish_embeddings_train_reshaped.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_resnet_fish.npz
+
+     v)on resnet Supervised 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/resnet_embeddings_train_supervised.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_resnet_supervised.npz
+
+ADJUSTED MUTUAL INFORMATION 
+
+a) HDBSCAN
+    i) resnet50  --> 0.0398 correct one is actually: --> 0.0052
+    python3 ami.py --clustered_file ../cluster_files/hdbscan_clusters_resnet_correct.npz
+    ii) megadescriptor --> 0.0043
+    python3 ami.py --clustered_file ../cluster_files/hdbscan_clusters_megadescriptor.npz
+    iii) DINOv2 --> 0.2055
+    python3 ami.py --clustered_file ../cluster_files/hdbscan_clusters_dino.npz
+        iii-2) dino three classes --> 0.1935
+        python3 ami.py --clustered_file ../cluster_files/hdbscan_clusters_dino_three_classes.npz
+    iv) resnet fish --> 0.1494
+    python3 ami.py --clustered_file ../cluster_files/hdbscan_clusters_resnet_fish.npz
+     v) resnet supervised  --> 0.1813
+    python3 ami.py --clustered_file ../cluster_files/hdbscan_clusters_resnet_supervised.npz
+
+b) PCA + HDBSCAN 
+    i) resnet50 --> 0.0014 actually correct value is : --> 0.0034
+    python3 ami.py --clustered_file ../cluster_files/pca_hdbscan_resnet_correct.npz
+    ii) megadescriptor --> 0.0010
+    python3 ami.py --clustered_file ../cluster_files/pca_hdbscan_megadescriptor.npz
+    iii) DINOv2 --> 0.2003
+    python3 ami.py --clustered_file ../cluster_files/pca_hdbscan_dino.npz
+        iii.2) dinov2 three classes  --> 0.1904
+        python3 ami.py --clustered_file ../cluster_files/pca_hdbscan_dino_three_classes.npz
+    iv) resnet fish --> 0.1468
+    python3 ami.py --clustered_file ../cluster_files/pca_hdbscan_resnet_fish.npz
+     v) resnet supervised --> 0.1962
+    python3 ami.py --clustered_file ../cluster_files/pca_hdbscan_clusters_resnet_supervised.npz
+
+c) K-means
+    i) resnet50  --> 0.0279 --> correct value is 0.2443
+    python3 ami.py --clustered_file ../cluster_files/k_means_clusters_resnet_correct.npz
+    ii) megadescriptor -> 0.0270
+    python3 ami.py --clustered_file ../cluster_files/k_means_clusters_megadescriptor.npz
+    iii) DINOv2 -> 0.2836
+    python3 ami.py --clustered_file ../cluster_files/k_means_clusters_dino.npz
+        iii-2) DINOv2 on three classes -> 0.2276
+    python3 ami.py --clustered_file ../cluster_files/3_classes_k_means_clusters_dino.npz
+    iv) FishNet --> 0.0771
+    python3 ami.py --clustered_file ../cluster_files/k_means_clusters_fish_resnet.npz
+     v) resnet supervised  --> 0.6538
+    python3 ami.py --clustered_file ../cluster_files/k_means_clusters_resnet_supervised.npz
+
+d) Agglomerative Clustering 
+    i) resnet50 --> 0.0321 --> corrected number --> 0.2596
+    python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_resnet_correct.npz
+    ii) megadescriptor --> 0.0279
+    python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_megadescriptor.npz
+    iii) DINOv2 --> 0.3093
+    python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_dino.npz
+    iv)resnet fish --> 0.0747
+    python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_resnet_fish.npz
+    # TODO v) resnet supervised --> 0.7201
+    python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_resnet_supervised.npz
+
+
+
+
+
+ac 4 classes --> 0.2218
+python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_dino_four_classes.npz
+
+LABEL DISTRIBUTION
+
+Analysing distribution of labels per each class
+    i) HDBSCAN after dino
+        python3 analyse_cluster_labels.py --clustered_file ../cluster_files/hdbscan_clusters_dino.npz --save_csv ../cluster_label_distribution/cluster_label_distribution_dino_hdbscan.csv 
+    ii) PCA+HDBSCAN
+    python3 analyse_cluster_labels.py --clustered_file ../cluster_files/pca_hdbscan_dino.npz --save_csv ../cluster_label_distribution/cluster_label_distribution_dino_pca_hdbscan.csv 
+    iii) k-means after DINOv2
+    python3 analyse_cluster_labels.py --clustered_file ../cluster_files/k_means_clusters_dino.npz --save_csv ../cluster_label_distribution/cluster_label_distribution_dino_kmeans.csv 
+    iv) for AC Dinov2
+    python3 analyse_cluster_labels.py --clustered_file ../cluster_files/agglomerative_clusters_dino.npz --save_csv ../cluster_label_distribution/cluster_label_distribution_dino_ac.csv 
+
+Analysing distribution of labels per each class plus normalised score 
+    i) HDBSCAN after dino
+        python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/hdbscan_clusters_dino.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_hdbscan.csv 
+    ii) PCA+HDBSCAN
+    python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/pca_hdbscan_dino.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_pca_hdbscan.csv 
+    iii) k-means after DINOv2
+    python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/k_means_clusters_dino.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_kmeans.csv 
+    iv) for AC Dinov2
+    python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/agglomerative_clusters_dino.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_ac.csv 
+
+
+
+ON GRAYSCALE IMAGES 
+
+1. extract embeddings
+    python3 extract_embeddings_dinov2.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/gray  --output_file ../embeddings_files/dino_embeddings_train_gray.npz
+
+2. cluster with agglomerative clustering
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_gray.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_dino_gray.npz
+
+2.2 cluster ac with 4 classes 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_gray_four_classes.npz --n_clusters 4 --output_file ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz
+
+
+3. calculate AMI --> 0.3351
+AMI for four classes --> 0.3348
+    python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_dino_gray.npz
+    python3 ami.py --clustered_file ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz
+
+4. label distribution 
+    python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/agglomerative_clusters_dino_gray.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_ac_gray.csv 
+    python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_ac_gray_four_classes.csv 
+
+
+
+
+
+
+
+
+1. RGB 10 classes  RAN
+
+a) extract embeddings 
+    python3 extract_embeddings_dinov2.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops  --output_file ../embeddings_files/dino_embeddings_train.npz
+b) cluster with AC 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_dino.npz
+c) run knn 
+    python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino.npz --val_test_embeddings ../embeddings_files/dino_embeddings_valid.npz --val_test_split_ratio 0.5 --k_list 20 50 70 90 100 130 150 170 190 200 --save_model ../knn_classifier/knn_rgb_ten_classes_best --ami_csv ../knn_classifier/ami_results_rgb_ten_classes.csv --cluster_to_label 0:3 1:5 2:1 3:6 4:9 5:2 6:8 7:0 8:1 9:7 --per_class_csv ../knn_classifier/per_class_accuracy_rgb_ten_classes.csv --eval_prefix ../knn_eval/rgb_10
+
+
+2. RGB 4 classes RAN
+a) extract embeddings 
+    python3 change_embeddings_class_id.py --input ../embeddings_files/dino_embeddings_train.npz --output ../embeddings_files/dino_embeddings_train_four_classes.npz --map 0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10 --log_csv four_train.csv
+b) cluster with AC 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_four_classes.npz --n_clusters 4 --output_file ../cluster_files/agglomerative_clusters_dino_four_classes.npz
+b.2) label distribution  
+python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/agglomerative_clusters_dino_four_classes.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_ac_rgb_four_classes.csv 
+c) run knn
+python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_four_classes.npz --val_test_embeddings ../embeddings_files/dino_embeddings_valid_four_classes.npz --val_test_split_ratio 0.5 --k_list 20 50 70 90 100 130 150 170 190 200 --save_model ../knn_classifier/knn_rgb_four_classes_best --ami_csv ../knn_classifier/ami_results_rgb_four_classes.csv --cluster_to_label 0:10 1:2 2:1 3:11 --per_class_csv ../knn_classifier/per_class_accuracy_rgb_four_classes.csv --eval_prefix ../knn_eval/rgb_4
+
+
+
+
+3. GRAYSCALE 10 classes  RAN
+
+a) extract embeddings 
+    python3 extract_embeddings_dinov2.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/gray  --output_file ../embeddings_files/dino_embeddings_train_gray.npz
+
+b) cluster with AC 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_gray.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_dino_gray.npz
+
+c) knn 
+python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_gray.npz --val_test_embeddings ../embeddings_files/dino_embeddings_valid_gray.npz --val_test_split_ratio 0.5 --k_list 20 50 70 90 100 130 150 170 190 200 --save_model ../knn_classifier/knn_gray_ten_classes_best --ami_csv ../knn_classifier/ami_results_gray_ten_classes.csv --cluster_to_label 0:5 1:7 2:1 3:8 4:2 5:9 6:1 7:1 8:3 9:0 --per_class_csv ../knn_classifier/per_class_accuracy_gray_ten_classes.csv --eval_prefix ../knn_eval/gray_10
+
+
+ 
+4. GRAYSCALE 4 classes RAN
+a) extract embeddings 
+    python3 change_embeddings_class_id.py --input ../embeddings_files/dino_embeddings_train_gray.npz --output ../embeddings_files/dino_embeddings_train_gray_four_classes.npz --map 0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10 --log_csv  check_four.csv
+b) cluster with ac
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_gray_four_classes.npz --n_clusters 4 --output_file ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz
+
+c.0)   change to four classes   
+    python3 change_embeddings_class_id.py --input ../embeddings_files/dino_embeddings_valid_gray.npz --output ../embeddings_files/dino_embeddings_valid_four_classes_gray.npz --map 0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10 --log_csv  check_four_valid_gray.csv
+
+c) knn 
+    python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz --val_test_embeddings ../embeddings_files/dino_embeddings_valid_four_classes_gray.npz --val_test_split_ratio 0.5  --k_list 20 50 70 90 100 130 150 170 190 200 --save_model ../knn_classifier/knn_gray_four_classes_best --ami_csv ../knn_classifier/ami_results_gray_four_classes.csv --cluster_to_label 0:2 1:11 2:1 3:10 --per_class_csv ../knn_classifier/per_class_accuracy_gray_four_classes.csv --eval_prefix ../knn_eval/gray_4
+
+
+
+
+1. IMAGE EHNANCEMENT BY FIXING CONTRAST, BUT DENOISING FIRST BECUASE BAD RESULTS OTHERWISE
+
+python3 clahe_denoising.py --input_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/gray --output_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/clahe_denoised_gray_2
+--> the results are shiiiiit so we keep the other ones, at least with the adaptive tiling. what about the denoising with normal tiles of 8x8?  still shit
+
+
+GRAYSCALE 10 CLASSES ENHANCED
+1. enhance the images --> done running CLAHE.py with correct folder paths for both train and valid 
+
+2. extract embeddings 
+    python3 extract_embeddings_dinov2.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/clahe_gray  --output_file ../embeddings_files/dino_embeddings_train_gray_clahe.npz
+    python3 extract_embeddings_dinov2.py --image_dir /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_valid/class_all/clahe_gray  --output_file ../embeddings_files/dino_embeddings_valid_gray_clahe.npz
+
+3. run agglomerative clustering 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_gray_clahe.npz --n_clusters 10 --output_file ../cluster_files/agglomerative_clusters_dino_gray_clahe.npz
+
+4. cluster label distribution 
+python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/agglomerative_clusters_dino_gray_clahe.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_ac_gray_clahe_10.csv 
+
+5. knn 
+
+python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_gray_clahe.npz --val_test_embeddings ../embeddings_files/dino_embeddings_valid_gray_clahe.npz --val_test_split_ratio 0.5 --k_list 20 50 70 90 100 130 150 170 190 200 --save_model ../knn_classifier/knn_gray_ten_classes_clahe_best --ami_csv ../knn_classifier/ami_results_gray_ten_classes_clahe.csv --cluster_to_label 0:3 1:0 2:4 3:1 4:6 5:5 6:1 7:8 8:9 9:2 --per_class_csv ../knn_classifier/per_class_accuracy_gray_ten_classes_clahe.csv --eval_prefix ../knn_eval/gray_10_clahe
+
+
+
+GRAYSCALE 4 classes ENHANCED
+1. enhance the images --> done running clahe.py with right folder paths 
+
+2. change embedding from 10 classes to 4 
+train
+python3 change_embeddings_class_id.py --input ../embeddings_files/dino_embeddings_train_gray_clahe.npz --output ../embeddings_files/dino_embeddings_train_gray_four_classes_clahe.npz --map 0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10 --log_csv  check_four_clahe_train.csv
+valid 
+python3 change_embeddings_class_id.py --input ../embeddings_files/dino_embeddings_valid_gray_clahe.npz --output ../embeddings_files/dino_embeddings_valid_gray_four_classes_clahe.npz --map 0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10 --log_csv  check_four_clahe_valid.csv
+
+3. run agglomerative clustering 
+    python3 agglomerative_clustering.py --embedding_file ../embeddings_files/dino_embeddings_train_gray_four_classes_clahe.npz --n_clusters 4 --output_file ../cluster_files/agglomerative_clusters_dino_gray_clahe_four_classes.npz
+4. label distribution 
+
+python3 cluster_label_distribution_normalised.py --clustered_file ../cluster_files/agglomerative_clusters_dino_gray_clahe_four_classes.npz --save_csv ../normalised_cluster_label_distribution/normalised_cluster_label_distribution_dino_ac_gray_clahe_4.csv 
+
+4. knn 
+    python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_gray_clahe_four_classes.npz --val_test_embeddings ../embeddings_files/dino_embeddings_valid_gray_four_classes_clahe.npz --val_test_split_ratio 0.5 --k_list 20 50 70 90 100 130 150 170 190 200 --save_model ../knn_classifier/knn_gray_four_classes_clahe_best --ami_csv ../knn_classifier/ami_results_gray_four_classes_clahe.csv --cluster_to_label 0:2 1:11 2:1 3:10 --per_class_csv ../knn_classifier/per_class_accuracy_gray_four_classes_clahe.csv --eval_prefix ../knn_eval/gray_4_clahe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TSNE VISUALISATION AFTER KNN 
+rgb 10 
+python3 t_sne_after_knn.py --embedding_npz ../cluster_files/agglomerative_clusters_dino.npz --knn_model ../knn_classifier/knn_rgb_ten_classes_best --cluster_to_label 0:3 1:5 2:1 3:6 4:9 5:2 6:8 7:0 8:1 9:7 --samples_per_label 2 --out_prefix ../t_sne_vis/rgb_10
+
+
+second try because the first wasnt working correctly 
+python3 t-sne_knn_2.py --embedding_file ../cluster_files/agglomerative_clusters_dino.npz --knn_model ../knn_classifier/knn_rgb_ten_classes_best --output_file t_sne_sfter_knn.png --samples_per_label 3 --cluster_to_label  0:3 1:5 2:1 3:6 4:9 5:2 6:8 7:0 8:1 9:7 --show_images
+
+
+same but grayscale 
+python3 t-sne_knn_2.py --embedding_file ../cluster_files/agglomerative_clusters_dino_gray.npz --knn_model ../knn_classifier/knn_gray_ten_classes_best --output_file t_sne_sfter_knn_gray.png --samples_per_label 3 --cluster_to_label  0:5 1:7 2:1 3:8 4:2 5:9 6:1 7:1 8:3 9:0 --show_images
+
+
+
+
+
+
+
+
+
+HELPER SCRIPTS
+
+- Making different copies of the images to test specific combinations
+python3 copy_images_into_folder.py --source /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_train/class_all/crops --destination ../three_classes --classes 1 2 3 5 7
+
+-- changing ids 
+python3 change_id.py --folder /Users/alteafogh/Documents/ITU/summer/Summer-fish/for-altea/three_classes/6 --new_class 11
+
+class 4 to class 11, where 11 is all the fish but starfish, crab and gobys ( gobys are 10)
+
+-- makes more sense to change them directly in the embeddings file 
+
+python3 change_embeddings_class_id.py --input ../embeddings_files/dino_embeddings_train_gray.npz --output ../embeddings_files/dino_embeddings_train_gray_four_classes.npz --map 0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10 --log_csv  check_four.csv
+
+
+checking four classes
+python3 npz_to_csv.py --input ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz --output ../cluster_files/agglomerative_clusters_dino_gray_four_classes.csv
+
+
+
+
+python3 change_embeddings_class_id.py --input ../embeddings_files/dino_embeddings_train_gray.npz --output ../embeddings_files/dino_embeddings_train_gray_four_classes.npz --map 0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10 --log_csv  check_four.csv
+
+python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz --query_embedding ../embeddings_files/dino_embeddings_valid_four_classes.npz --k_list 170  --save_model ../knn_classifier/knn_gray_four_classes_best_170_3 --ami_csv ../knn_classifier/ami_results_170_3.csv   --cluster_to_label 0:2 1:11 2:1 3:10 --per_class_csv ../knn_classifier/per_class_accuracy_170_3.csv  --eval_prefix ../knn_eval/knn_170_2
+
+
+
+python3 knn_classifier.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz --query_embedding ../embeddings_files/dino_embeddings_valid_four_classes.npz --k 20 --save_model ../knn_classifier/knn_gray_four_classes
+0:11 4:11 6:11 8:11 9:11 3:10 5:10 7:10
+
+-- changing ids for four classes valid, for visualising 
+python3 change_id.py --folder /Users/alteafogh/Documents/ITU/summer/data/crop-bbs_all_cameras_valid/class_9/9 --new_class 11
+
+
+knn with many numbers of neighbors for testing 
+
+python3 knn_classifier_grid_search.py --train_embeddings ../cluster_files/agglomerative_clusters_dino_gray_four_classes.npz --query_embedding ../embeddings_files/dino_embeddings_valid_four_classes.npz --k_list 170  --save_model ../knn_classifier/knn_gray_four_classes_best_170_3 --ami_csv ../knn_classifier/ami_results_170_3.csv   --cluster_to_label 0:2 1:11 2:1 3:10 --per_class_csv ../knn_classifier/per_class_accuracy_170_3.csv  --eval_prefix ../knn_eval/knn_170_2
+
+

@@ -1,0 +1,28 @@
+Cluster 0: --> class 2
+  Class 1: 2425 images (13.08%)
+  Class 2: 4134 images (79.30%)
+  Class 10: 3159 images (64.03%)
+  Class 11: 3628 images (31.09%)
+ 
+Cluster 1: --> class 11
+  Class 1: 73 images (0.39%)
+  Class 2: 32 images (0.61%)
+  Class 10: 177 images (3.59%)
+  Class 11: 4827 images (41.37%)
+
+Cluster 2: --> class 1
+  Class 1: 12454 images (67.16%)
+  Class 2: 64 images (1.23%)
+  Class 10: 9 images (0.18%)
+  Class 11: 134 images (1.15%)
+
+Cluster 3: --> class 10
+  Class 1: 3591 images (19.37%)
+  Class 2: 983 images (18.86%)
+  Class 10: 1589 images (32.21%)
+  Class 11: 3080 images (26.39%)
+
+
+
+
+

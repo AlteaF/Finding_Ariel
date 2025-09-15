@@ -1,0 +1,103 @@
+
+📊 Cluster-Class Distribution (count and % of total images per class):
+
+Cluster 0: --> class 3
+  Class 0: 937 images (9.75%)
+  Class 1: 1440 images (7.77%)
+  Class 2: 1627 images (31.21%)
+  Class 3: 2318 images (61.93%)
+  Class 4: 338 images (35.03%)
+  Class 5: 9 images (1.40%)
+  Class 6: 71 images (11.99%)
+  Class 7: 304 images (55.58%)
+  Class 9: 11 images (5.19%)
+
+Cluster 1: --> class 1 --> class 0 
+  Class 0: 1111 images (11.55%)
+  Class 1: 5536 images (29.85%)
+  Class 2: 85 images (1.63%)
+  Class 3: 265 images (7.08%)
+  Class 4: 50 images (5.18%)
+  Class 5: 94 images (14.60%)
+  Class 6: 3 images (0.51%)
+  Class 7: 50 images (9.14%)
+  Class 8: 2 images (0.70%)
+ 
+Cluster 2: --> class 2 --> class 4
+  Class 0: 1482 images (15.41%)
+  Class 1: 3171 images (17.10%)
+  Class 2: 1420 images (27.24%)
+  Class 3: 625 images (16.70%)
+  Class 4: 203 images (21.04%)
+  Class 5: 76 images (11.80%)
+  Class 6: 89 images (15.03%)
+  Class 7: 108 images (19.74%)
+  Class 8: 5 images (1.75%)
+  Class 9: 7 images (3.30%)
+
+Cluster 3: --> class 1
+  Class 0: 37 images (0.38%)
+  Class 1: 5429 images (29.28%)
+  Class 2: 51 images (0.98%)
+  Class 3: 3 images (0.08%)
+  Class 4: 3 images (0.31%)
+  Class 5: 1 images (0.16%)
+  Class 7: 4 images (0.73%)
+  Class 8: 1 images (0.35%)
+
+Cluster 4: --> class 6
+  Class 0: 1706 images (17.74%)
+  Class 1: 458 images (2.47%)
+  Class 2: 166 images (3.18%)
+  Class 3: 242 images (6.47%)
+  Class 4: 93 images (9.64%)
+  Class 5: 24 images (3.73%)
+  Class 6: 110 images (18.58%)
+  Class 7: 29 images (5.30%)
+  Class 8: 26 images (9.12%)
+  Class 9: 21 images (9.91%)
+
+Cluster 5: --> class 5
+  Class 0: 1219 images (12.68%)
+  Class 1: 210 images (1.13%)
+  Class 2: 158 images (3.03%)
+  Class 3: 269 images (7.19%)
+  Class 4: 43 images (4.46%)
+  Class 5: 313 images (48.60%)
+  Class 6: 96 images (16.22%)
+  Class 7: 47 images (8.59%)
+  Class 8: 65 images (22.81%)
+  Class 9: 20 images (9.43%)
+
+Cluster 6: --> class 1
+  Class 0: 23 images (0.24%)
+  Class 1: 2209 images (11.91%)
+
+Cluster 7: -_> class 8
+  Class 0: 2230 images (23.19%)
+  Class 1: 49 images (0.26%)
+  Class 2: 70 images (1.34%)
+  Class 3: 8 images (0.21%)
+  Class 4: 50 images (5.18%)
+  Class 5: 107 images (16.61%)
+  Class 6: 51 images (8.61%)
+  Class 7: 5 images (0.91%)
+  Class 8: 161 images (56.49%)
+  Class 9: 16 images (7.55%)
+
+Cluster 8: --> class 9
+  Class 0: 857 images (8.91%)
+  Class 1: 8 images (0.04%)
+  Class 2: 7 images (0.13%)
+  Class 3: 13 images (0.35%)
+  Class 4: 185 images (19.17%)
+  Class 5: 20 images (3.11%)
+  Class 6: 169 images (28.55%)
+  Class 8: 25 images (8.77%)
+  Class 9: 137 images (64.62%)
+
+Cluster 9: --> class 2 
+  Class 0: 13 images (0.14%)
+  Class 1: 33 images (0.18%)
+  Class 2: 1629 images (31.25%)
+  Class 6: 3 images (0.51%)

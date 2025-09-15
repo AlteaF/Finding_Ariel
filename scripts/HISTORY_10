@@ -1,0 +1,16 @@
+ 1030  pip3 install torch
+ 1031  pip3 install -r requirements.txt
+ 1032  python3 extract_embeddings.py --image_dir../data/crop-bbs_all_cameras_train/class_all/gray  --output_file ../embeddings_files/resnet_embeddings_train_gray.npz\n
+ 1033  source rp_fish/bin/activate
+ 1034  python3 embeddings_normaliser.py --input_file ../embeddings_files/resnet_embeddings_train.npz --output_file ../normalised_embeddings/resnet_normalised_embeddings_train.npz
+ 1035  cd scripts
+ 1036  python3 embeddings_normaliser.py --input_file ../embeddings_files/resnet_embeddings_train.npz --output_file ../normalised_embeddings/resnet_normalised_embeddings_train.npz
+ 1037  python3 embeddings_normaliser.py --input_file ../embeddings_files/resnet_embeddings_train.npz --output_file ../normalised_embeddings/resnet_normalised_embeddings_train.npz
+ 1038  python3 embeddings_normaliser.py --input_file ../embeddings_files/dino_embeddings_train.npz --output_file ../normalised_embeddings/dino_normalised_embeddings_train.npz\n
+ 1039  python3 embeddings_normaliser.py --input_file ../embeddings_files/dino_embeddings_train_gray.npz --output_file ../normalised_embeddings/dino_normalised_embeddings_train_gray.npz\n
+ 1040  python3 extract_embeddings.py --image_dir../data/crop-bbs_all_cameras_train/class_all/gray  --output_file ../embeddings_files/resnet_embeddings_train_gray.npz\n
+ 1041  python3 extract_embeddings.py --image_dir../data/crop-bbs_all_cameras_train/class_all/gray --output_file ../embeddings_files/resnet_embeddings_train_gray.npz\n
+ 1042  python3 extract_embeddings.py --image_dir ../data/crop-bbs_all_cameras_train/class_all/gray --output_file ../embeddings_files/resnet_embeddings_train_gray.npz\n
+ 1043  python3 embeddings_normaliser.py --input_file ../embeddings_files/resnet_embeddings_train_gray.npz --output_file ../normalised_embeddings/resnet_normalised_embeddings_train_gray.npz\n
+ 1044  source summer/bin/activate
+ 1045  source summer/bin/activate
